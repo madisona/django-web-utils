@@ -1,0 +1,64 @@
+
+Django Web Utils
+
+Some helpers for working with the web.
+
+Provided are:
+
+format_currency
+---------------
+formats currency (USD) to a string.
+
+>>> cash = 1250
+>>> formatted = format_currency(cash)
+'$1,250.00'
+
+>>> formatted = format_currency(cash, places=0)
+'$1,250'
+
+>>> cash = 0
+>>> formatted = format_currency(cash, show_zero=False)
+''
+
+
+format_currency template tag
+---------------------------------------------------
+For django to be able to find the templatetags, you'll need to register
+`web_utils` in your INSTALLED_APPS settings
+
+{% load formatting_tags %}
+
+# value, places, show_zero flag.
+{% format_currency cash_amount 0 "False" %}
+
+
+ping_google_sitemap
+-------------------
+A signal receiver to ping Google Sitemap to let them know your content changed
+
+1. Add the following to settings.py
+   PING_GOOGLE_SITEMAP = True
+   SITE_DOMAIN = 'http://www.example.com'
+
+2. Add a named url: 'sitemap' so the method can resolve your sitemap url
+
+3. Register the receiver on whatever signal you'd like to trigger the ping.
+
+   receiver(models.signals.post_save, sender=BlogEntry, dispatch_uid="BlogEntry")(ping_google_sitemap)
+
+
+SSLMiddleware
+-------------
+Allows you to force various urls through https or http
+
+1. Add `SSL_ENABLED = True`  to your settings.py
+
+2. Add `web_utils.middleware.SSLMiddleware` to your middleware settings
+
+3. Add a `USE_SSL` = True/False to a route's view_kwargs
+
+   url(r'^admin/', include(admin.site.urls), kwargs={'USE_SSL': True}),
+
+By default, all routes will be forced to http unless they have `USE_SSL=True`
+If you would like to flip this and secure everything except only specific routes
+add `USE_SSL_DEFAULT=True` to your settings.

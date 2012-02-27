@@ -1,0 +1,16 @@
+# bytecode
+*.pyc
+*.pyo
+*.egg-info*
+build/*
+dist/*
+
+#ignore pycharm settings
+.idea*
+local.db
+
+# vim swp files
+*.swp
+
+
+
