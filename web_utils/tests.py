@@ -11,13 +11,6 @@ from web_utils.middleware import SSLMiddleware
 from web_utils.templatetags import formatting_tags
 from web_utils.web import ping_google_sitemap
 
-__all__ = (
-    'FormatCurrencyTests',
-    'FormatCurrencyTemplateTagTests',
-    'GoogleSitemapPingTests',
-    'SSLMiddlewareTests',
-)
-
 
 class FormatCurrencyTests(test.TestCase):
 

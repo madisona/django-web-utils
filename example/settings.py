@@ -1,6 +1,13 @@
 # Django settings for example project.
 
+import sys
 from os.path import abspath, dirname, join
+parent = abspath(dirname(__file__))
+grandparent = abspath(join(parent, '..'))
+for path in (grandparent, parent):
+    if path not in sys.path:
+        sys.path.insert(0, path)
+
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
