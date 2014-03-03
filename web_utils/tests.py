@@ -8,7 +8,7 @@ from django.core.urlresolvers import reverse
 
 from web_utils.formatting import format_currency
 from web_utils.middleware import SSLMiddleware
-from web_utils.templatetags import formatting_tags
+from web_utils.templatetags import formatting_tags, analytics_tags
 from web_utils.web import ping_google_sitemap
 
 
@@ -72,6 +72,19 @@ class FormatCurrencyTemplateTagTests(test.TestCase):
     def test_show_zero_when_value_is_none_and_show_zero_is_True(self):
         amount = formatting_tags.format_currency(None, show_zero="True")
         self.assertEqual("$0.00", amount)
+
+
+class TrackEventTemplateTagTests(test.TestCase):
+
+    def test_leaves_label_hyphens(self):
+        output = analytics_tags.track_event("Category", "action", "company-id")
+        expected = "onClick=\"_gaq.push(['_trackEvent', 'Category', 'action', 'company-id']);\""
+        self.assertEqual(expected, output)
+
+    def test_escapes_js_for_label(self):
+        output = analytics_tags.track_event("Category", "action", "company's bad;-stuff.")
+        expected = "onClick=\"_gaq.push(['_trackEvent', 'Category', 'action', 'company\u0027s bad\u003B-stuff.']);\""
+        self.assertEqual(expected, output)
 
 
 class GoogleSitemapPingTests(test.TestCase):
