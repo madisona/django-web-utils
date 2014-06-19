@@ -87,6 +87,19 @@ class TrackEventTemplateTagTests(test.TestCase):
         self.assertEqual(expected, output)
 
 
+class UniversalTrackEventTemplateTagTests(test.TestCase):
+
+    def test_leaves_label_hyphens(self):
+        output = analytics_tags.universal_track_event("Category", "action", "company-id")
+        expected = "onClick=\"ga('send', 'event', 'Category', 'action', 'company-id');\""
+        self.assertEqual(expected, output)
+
+    def test_escapes_js_for_label(self):
+        output = analytics_tags.universal_track_event("Category", "action", "company's bad;-stuff.")
+        expected = "onClick=\"ga('send', 'event', 'Category', 'action', 'company\u0027s bad\u003B-stuff.');\""
+        self.assertEqual(expected, output)
+
+
 class GoogleSitemapPingTests(test.TestCase):
 
     def setUp(self, **kwargs):
