@@ -1,0 +1,9 @@
+<div class="pagination">
+    <ul>
+        {% if page_obj.has_previous %}<li title="Previous"><a href="?{% if query_string %}{{ query_string }}&amp;{% endif %}page={{ page_obj.previous_page_number }}">&laquo;</a></li>{% endif %}
+        {% for num in page_numbers %}
+        <li{% if num == page_obj.number %} class="active"{% endif %}><a href="?{% if query_string %}{{ query_string }}&amp;{% endif %}page={{ num }}">{{ num }}</a></li>
+        {% endfor %}
+        {% if page_obj.has_next %}<li title="Next"><a href="?{% if query_string %}{{ query_string }}&amp;{% endif %}page={{ page_obj.next_page_number }}">&raquo;</a></li>{% endif %}
+    </ul>
+</div>

@@ -91,6 +91,31 @@ STATICFILES_FINDERS = (
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '2$^cjj4vahx#ht-*(0hj8v^^b+((^4@3$u1*t&4c8%ullc5=)f'
 
+# django 1.8 changed template settings
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [
+            # insert your TEMPLATE_DIRS here
+        ],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                # Insert your TEMPLATE_CONTEXT_PROCESSORS here or use this
+                # list if you haven't customized them:
+                'django.contrib.auth.context_processors.auth',
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                # 'django.template.context_processors.i18n',
+                # 'django.template.context_processors.media',
+                # 'django.template.context_processors.static',
+                # 'django.template.context_processors.tz',
+                # 'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]
+
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
