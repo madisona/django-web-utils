@@ -1,1 +1,2 @@
 recursive-include web_utils/templates *
+include requirements/*.txt
