@@ -1,5 +1,9 @@
 import mock
-from urllib import quote_plus
+
+try:
+    from urllib import quote_plus
+except ImportError:
+    from urllib.parse import quote_plus
 
 from django import test
 from django.conf import settings
@@ -27,14 +31,13 @@ class GoogleSitemapPingTests(test.TestCase):
         """
         Setting urls to make sure reversing sitemap url works.
         """
-        from django.conf.urls.defaults import patterns, url
+        from django.conf.urls import url
         from django.views.generic import TemplateView
-        return patterns(
-            '',
+        return [
             url(r'^sitemap.xml/$', TemplateView.as_view(), name='sitemap'),
-        )
+        ]
 
-    @mock.patch('urllib2.urlopen')
+    @mock.patch('web_utils.web.urlopen')
     def test_pings_google_sitemap_with_sitemap_location(self, urlopen):
         ping_google_sitemap(mock.Mock())
 
@@ -43,7 +46,7 @@ class GoogleSitemapPingTests(test.TestCase):
         )
         urlopen.assert_called_once_with(expected_call)
 
-    @mock.patch('urllib2.urlopen')
+    @mock.patch('web_utils.web.urlopen')
     def test_doesnt_pings_google_sitemap(self, urlopen):
         settings.PING_GOOGLE_SITEMAP = False
         ping_google_sitemap(mock.Mock())

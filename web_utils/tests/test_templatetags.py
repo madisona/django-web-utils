@@ -143,27 +143,27 @@ class PaginatorTests(test.TestCase):
 
     def test_returns_next_list_of_pages_when_starting_with_first(self):
         places = paginator_tags.get_pages_to_show(1, 5)
-        self.assertEqual([1, 2, 3, 4, 5], places)
+        self.assertEqual([1, 2, 3, 4, 5], list(places))
 
     def test_returns_places_in_decent_order_when_second(self):
         places = paginator_tags.get_pages_to_show(2, 5)
-        self.assertEqual([1, 2, 3, 4, 5], places)
+        self.assertEqual([1, 2, 3, 4, 5], list(places))
 
     def test_returns_places_in_decent_order_when_third(self):
         places = paginator_tags.get_pages_to_show(3, 5)
-        self.assertEqual([1, 2, 3, 4, 5], places)
+        self.assertEqual([1, 2, 3, 4, 5], list(places))
 
     def test_keeps_current_page_in_middle_when_has_more_than_two_previous_and_two_next(self):
         places = paginator_tags.get_pages_to_show(4, 6)
-        self.assertEqual([2, 3, 4, 5, 6], places)
+        self.assertEqual([2, 3, 4, 5, 6], list(places))
 
     def test_returns_straight_list_when_less_than_5_pages(self):
         places = paginator_tags.get_pages_to_show(1, 2)
-        self.assertEqual([1, 2], places)
+        self.assertEqual([1, 2], list(places))
 
     def test_returns_correct_list_when_on_last_page_and_less_than_5(self):
         places = paginator_tags.get_pages_to_show(3, 3)
-        self.assertEqual([1, 2, 3], places)
+        self.assertEqual([1, 2, 3], list(places))
 
 
 class ShowPaginatorTests(test.TestCase):

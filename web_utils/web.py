@@ -1,5 +1,10 @@
-import urllib
-import urllib2
+
+try:
+    from urllib2 import urlopen, HTTPError
+    from urllib import urlencode
+except ImportError:
+    from urllib.request import urlopen, HTTPError
+    from urllib.parse import urlencode
 
 from django.conf import settings
 from django.core.urlresolvers import reverse
@@ -14,16 +19,16 @@ def ping_google_sitemap(sender, **kwargs):
     # SITEMAP_FAIL = "Couldn't automatically update Google Sitemap. Please do it manually in webmaster tools."
 
     if getattr(settings, 'PING_GOOGLE_SITEMAP', False):
-        data = urllib.urlencode({
+        data = urlencode({
             'sitemap': settings.SITE_DOMAIN + reverse("sitemap"),
         })
         url = GOOGLE_SITEMAP_URL + '?' + data
         try:
-            response = urllib2.urlopen(url)
+            response = urlopen(url)
             if response.code / 100 == 2:
                 # todo: should we log it or message the user somehow?
                 pass
 
-        except urllib2.HTTPError:
+        except HTTPError:
             # todo: should we log it or message the user somehow?
             pass
