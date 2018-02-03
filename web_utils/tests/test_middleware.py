@@ -1,4 +1,3 @@
-
 from django import test
 
 from web_utils.middleware import SSLMiddleware

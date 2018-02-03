@@ -1,9 +1,9 @@
-
 from django import template
 
 from web_utils import formatting
 
 register = template.Library()
+
 
 @register.simple_tag
 def format_currency(value, places=2, show_zero="True"):

@@ -1,4 +1,3 @@
-
 from django.conf import settings
 from django.http import HttpResponsePermanentRedirect
 
@@ -30,7 +29,9 @@ class SSLMiddleware(object):
         protocol = use_secure and "https" or "http"
         redirect_url = "%s://%s%s" % (protocol, request.get_host(), request.get_full_path())
         if settings.DEBUG and request.method == 'POST':
-            raise RuntimeError("""Django can't perform a SSL redirect while maintaining POST data.
-           Please structure your views so that redirects only occur during GETs.""")
+            raise RuntimeError(
+                """Django can't perform a SSL redirect while maintaining POST data.
+           Please structure your views so that redirects only occur during GETs."""
+            )
 
         return HttpResponsePermanentRedirect(redirect_url)

@@ -1,12 +1,6 @@
 
 from setuptools import setup, find_packages
 
-REQUIREMENTS = (
-    'django>=1.8',
-)
-
-TEST_REQUIREMENTS = ('mock',)
-
 from web_utils import VERSION
 
 setup(
@@ -18,8 +12,8 @@ setup(
     url="https://github.com/madisona/django-web-utils",
     packages=find_packages(exclude=["example"]),
     include_package_data=True,
-    install_requires=REQUIREMENTS,
-    tests_require=TEST_REQUIREMENTS,
+    install_requires=open('requirements/requirements.txt').read().split('\n'),
+    tests_require=open('requirements/test.txt').read().split('\n'),
     zip_safe=False,
     classifiers = [
         "Development Status :: 4 - Beta",
