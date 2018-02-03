@@ -1,4 +1,4 @@
-from django.conf.urls import patterns, include, url
+from django.conf.urls import include, url
 
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
@@ -6,7 +6,7 @@ from django.conf.urls import patterns, include, url
 
 from django.views.generic import View
 
-urlpatterns = patterns('',
+urlpatterns = [
 
     url(r'^$', View.as_view(), name='sitemap'),
     # url(r'^example/', include('example.foo.urls')),
@@ -16,4 +16,4 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     # url(r'^admin/', include(admin.site.urls)),
-)
+]

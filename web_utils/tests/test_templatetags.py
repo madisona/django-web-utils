@@ -196,3 +196,28 @@ class ShowPaginatorTests(test.TestCase):
         del(data_copy["page"])
         result = paginator_tags.show_paginator(page_obj, paginator, request.GET)
         self.assertEqual(data_copy.urlencode(), result["query_string"])
+
+
+class GetSettingTagTests(test.TestCase):
+
+    def test_puts_setting_value_in_template(self):
+        expected = "Some Value"
+
+        with self.settings(TEST_VARIABLE=expected):
+            t = template.Template(
+                """
+                {% load settings_tags %}
+                {% get_setting 'TEST_VARIABLE' %}
+            """
+            )
+            self.assertEqual(expected, t.render(template.Context({})).strip())
+
+    def test_defaults_to_empty_string_when_setting_not_found(self):
+
+        t = template.Template(
+            """
+            {% load settings_tags %}
+            {% get_setting 'SOME_CRAZY_SETTING_THAT_DOESNT_EXIST' %}
+        """
+        )
+        self.assertEqual("", t.render(template.Context({})).strip())
