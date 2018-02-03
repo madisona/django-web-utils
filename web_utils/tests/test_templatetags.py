@@ -78,7 +78,7 @@ class TrackEventTemplateTagTests(test.TestCase):
 
     def test_escapes_js_for_label(self):
         output = analytics_tags.track_event("Category", "action", "company's bad;-stuff.")
-        expected = "onClick=\"_gaq.push(['_trackEvent', 'Category', 'action', 'company\u0027s bad\u003B-stuff.']);\""
+        expected = "onClick=\"_gaq.push(['_trackEvent', 'Category', 'action', 'company\\u0027s bad\\u003B-stuff.']);\""
         self.assertEqual(expected, output)
 
 
@@ -91,7 +91,7 @@ class UniversalTrackEventTemplateTagTests(test.TestCase):
 
     def test_escapes_js_for_label(self):
         output = analytics_tags.universal_track_event("Category", "action", "company's bad;-stuff.")
-        expected = "onClick=\"ga('send', 'event', 'Category', 'action', 'company\u0027s bad\u003B-stuff.');\""
+        expected = "onClick=\"ga('send', 'event', 'Category', 'action', 'company\\u0027s bad\\u003B-stuff.');\""
         self.assertEqual(expected, output)
 
 
