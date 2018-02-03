@@ -1,4 +1,3 @@
-
 import mock
 from django import template
 from django import test
@@ -99,30 +98,36 @@ class UniversalTrackEventTemplateTagTests(test.TestCase):
 class ActivateTemplateTagTests(test.TestCase):
 
     def test_returns_active_when_request_is_same_path(self):
-        t = template.Template("""
+        t = template.Template(
+            """
             {% load html_tags %}
             <a href="/my/path/" class="{% activate '/my/path/' %}">Nav Tab</a>
-        """)
+        """
+        )
         request = test.RequestFactory().get('/my/path/')
         context = template.RequestContext(request)
         response = t.render(context)
         self.assertEqual('<a href="/my/path/" class="active">Nav Tab</a>', response.strip())
 
     def test_returns_active_when_request_is_same_path_as_additional_url(self):
-        t = template.Template("""
+        t = template.Template(
+            """
             {% load html_tags %}
             <a href="/my/path/" class="{% activate '/one-path' '/two-path/' '/my/path/' %}">Nav Tab</a>
-        """)
+        """
+        )
         request = test.RequestFactory().get('/two-path/')
         context = template.RequestContext(request)
         response = t.render(context)
         self.assertEqual('<a href="/my/path/" class="active">Nav Tab</a>', response.strip())
 
     def test_returns_empty_string_when_nav_tab_is_not_current_request(self):
-        t = template.Template("""
+        t = template.Template(
+            """
             {% load html_tags %}
             <a href="/home/page/" class="{% activate '/home/page/' %}">Nav Tab</a>
-        """)
+        """
+        )
         request = test.RequestFactory().get('/other/path/')
         context = template.RequestContext(request)
         response = t.render(context)
@@ -193,7 +198,7 @@ class ShowPaginatorTests(test.TestCase):
         page_obj = mock.Mock(Page, number=2)
 
         data_copy = request.GET.copy()
-        del(data_copy["page"])
+        del (data_copy["page"])
         result = paginator_tags.show_paginator(page_obj, paginator, request.GET)
         self.assertEqual(data_copy.urlencode(), result["query_string"])
 

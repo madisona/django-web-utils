@@ -1,4 +1,3 @@
-
 import urllib
 import urllib2
 
@@ -6,6 +5,7 @@ from django.conf import settings
 from django.core.urlresolvers import reverse
 
 GOOGLE_SITEMAP_URL = 'http://www.google.com/webmasters/tools/ping'
+
 
 def ping_google_sitemap(sender, **kwargs):
     """
@@ -16,7 +16,7 @@ def ping_google_sitemap(sender, **kwargs):
     if getattr(settings, 'PING_GOOGLE_SITEMAP', False):
         data = urllib.urlencode({
             'sitemap': settings.SITE_DOMAIN + reverse("sitemap"),
-            })
+        })
         url = GOOGLE_SITEMAP_URL + '?' + data
         try:
             response = urllib2.urlopen(url)
@@ -27,4 +27,3 @@ def ping_google_sitemap(sender, **kwargs):
         except urllib2.HTTPError:
             # todo: should we log it or message the user somehow?
             pass
-

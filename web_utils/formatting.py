@@ -1,5 +1,3 @@
-
-
 def format_currency(value, places=2, show_zero=True):
     """
     Formats value currency format like: $1,500.25
