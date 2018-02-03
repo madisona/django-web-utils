@@ -11,7 +11,7 @@ install:
 script:
   - coverage run --source=web_utils example/manage.py test
   - coverage report --show-missing
-  - flake8 web_utils
+  - flake8 web_utils --max-line-length=120
 
 env:
   - DJANGO_VERSION=">=1.8,<1.9"
