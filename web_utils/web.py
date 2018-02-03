@@ -11,7 +11,7 @@ def ping_google_sitemap(sender, **kwargs):
     """
     Ping Google to let them know of updated content.
     """
-    SITEMAP_FAIL = "Couldn't automatically update Google Sitemap. Please do it manually in webmaster tools."
+    # SITEMAP_FAIL = "Couldn't automatically update Google Sitemap. Please do it manually in webmaster tools."
 
     if getattr(settings, 'PING_GOOGLE_SITEMAP', False):
         data = urllib.urlencode({
