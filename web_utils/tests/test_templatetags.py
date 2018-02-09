@@ -3,6 +3,11 @@ from django import template
 from django import test
 from django.core.paginator import Paginator, Page
 
+try:
+    from urlparse import parse_qs
+except ImportError:
+    from urllib.parse import parse_qs
+
 from web_utils.formatting import format_currency
 from web_utils.templatetags import formatting_tags, analytics_tags, html_tags, paginator_tags
 
@@ -190,7 +195,7 @@ class ShowPaginatorTests(test.TestCase):
         page_obj = mock.Mock(Page, number=2)
 
         result = paginator_tags.show_paginator(page_obj, paginator, request.GET)
-        self.assertEqual(request.GET.urlencode(), result["query_string"])
+        self.assertEqual(dict(request.GET), dict(parse_qs(result["query_string"])))
 
     def test_sends_query_string_without_page_param_to_context(self):
         request = test.RequestFactory().get("/", data={"this": "thing", "that": "way", "page": 4})
