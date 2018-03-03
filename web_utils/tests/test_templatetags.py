@@ -101,6 +101,19 @@ class UniversalTrackEventTemplateTagTests(test.TestCase):
         self.assertEqual(expected, output)
 
 
+class GTagTrackEventTemplateTagTests(test.TestCase):
+
+    def test_leaves_label_hyphens(self):
+        output = analytics_tags.gtag_track_event("Category", "action", "company-id")
+        expected = "onClick=\"gtag('event', 'action', {'event_category': 'Category', 'event_label': 'company-id'});\""
+        self.assertEqual(expected, output)
+
+    def test_escapes_js_for_label(self):
+        output = analytics_tags.gtag_track_event("Category", "action", "company's bad;-stuff.")
+        expected = "onClick=\"gtag('event', 'action', {'event_category': 'Category', 'event_label': 'company\\u0027s bad\\u003B-stuff.'});\""  # noqa: E501
+        self.assertEqual(expected, output)
+
+
 class AnalyticsSnippetTemplateTagTests(test.TestCase):
 
     def _render_template(self):
@@ -139,6 +152,30 @@ class AnalyticsSnippetTemplateTagTests(test.TestCase):
         self.assertEqual(
             "You must define GOOGLE_ANALYTICS_ID and GOOGLE_ANALYTICS_DOMAIN in settings.", str(e.exception)
         )
+
+
+class AnalyticsGtagSnippetTemplateTagTests(test.TestCase):
+
+    def _render_template(self):
+        t = template.Template(
+            """
+            {% load analytics_tags %}
+            {% analytics_gtag_snippet %}
+        """
+        )
+        request = test.RequestFactory().get('/my/path/')
+        context = template.RequestContext(request)
+        return t.render(context)
+
+    @test.override_settings(GOOGLE_ANALYTICS_ID="UA-1234567")
+    def test_renders_analytics_snippet(self):
+        response = self._render_template()
+        self.assertIn("gtag('config', 'UA-1234567');", response)
+
+    def test_raises_improperly_configured_when_neither_settings_not_defined(self):
+        with self.assertRaises(ImproperlyConfigured) as e:
+            self._render_template()
+        self.assertEqual("You must define GOOGLE_ANALYTICS_ID in settings.", str(e.exception))
 
 
 class ActivateTemplateTagTests(test.TestCase):
