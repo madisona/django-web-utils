@@ -9,8 +9,8 @@ setup(
     url="https://github.com/madisona/django-web-utils",
     packages=find_packages(exclude=["example"]),
     include_package_data=True,
-    install_requires=open('requirements/requirements.txt').read().split('\n'),
-    tests_require=open('requirements/test.txt').read().split('\n'),
+    install_requires=open('requirements/requirements.txt').read().splitlines(),
+    tests_require=open('requirements/test.txt').read().splitlines(),
     zip_safe=False,
     classifiers=[
         "Development Status :: 4 - Beta",
