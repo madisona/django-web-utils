@@ -121,7 +121,7 @@ class AnalyticsSnippetTemplateTagTests(test.TestCase):
         with self.assertRaises(ImproperlyConfigured) as e:
             self._render_template()
         self.assertEqual(
-            "You must define GOOGLE_ANALYTICS_ID and GOOGLE_ANALYTICS_DOMAIN in settings.", e.exception.message
+            "You must define GOOGLE_ANALYTICS_ID and GOOGLE_ANALYTICS_DOMAIN in settings.", str(e.exception)
         )
 
     @test.override_settings(GOOGLE_ANALYTICS_ID="UA-1234567")
@@ -129,7 +129,7 @@ class AnalyticsSnippetTemplateTagTests(test.TestCase):
         with self.assertRaises(ImproperlyConfigured) as e:
             self._render_template()
         self.assertEqual(
-            "You must define GOOGLE_ANALYTICS_ID and GOOGLE_ANALYTICS_DOMAIN in settings.", e.exception.message
+            "You must define GOOGLE_ANALYTICS_ID and GOOGLE_ANALYTICS_DOMAIN in settings.", str(e.exception)
         )
 
     @test.override_settings(GOOGLE_ANALYTICS_DOMAIN="www.example.com")
@@ -137,7 +137,7 @@ class AnalyticsSnippetTemplateTagTests(test.TestCase):
         with self.assertRaises(ImproperlyConfigured) as e:
             self._render_template()
         self.assertEqual(
-            "You must define GOOGLE_ANALYTICS_ID and GOOGLE_ANALYTICS_DOMAIN in settings.", e.exception.message
+            "You must define GOOGLE_ANALYTICS_ID and GOOGLE_ANALYTICS_DOMAIN in settings.", str(e.exception)
         )
 
 
