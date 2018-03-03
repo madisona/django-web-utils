@@ -133,7 +133,7 @@ class AnalyticsSnippetTemplateTagTests(test.TestCase):
         )
 
     @test.override_settings(GOOGLE_ANALYTICS_DOMAIN="www.example.com")
-    def test_raises_improperly_configured_when_only_analytics_id_defined(self):
+    def test_raises_improperly_configured_when_only_analytics_domain_defined(self):
         with self.assertRaises(ImproperlyConfigured) as e:
             self._render_template()
         self.assertEqual(
