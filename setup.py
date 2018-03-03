@@ -1,11 +1,8 @@
-
 from setuptools import setup, find_packages
-
-from web_utils import VERSION
 
 setup(
     name="django-web-utils",
-    version=VERSION,
+    version='0.3.0',
     author="Aaron Madison",
     description="Django helpers for working with the web.",
     long_description=open('README', 'r').read(),
@@ -15,7 +12,7 @@ setup(
     install_requires=open('requirements/requirements.txt').read().split('\n'),
     tests_require=open('requirements/test.txt').read().split('\n'),
     zip_safe=False,
-    classifiers = [
+    classifiers=[
         "Development Status :: 4 - Beta",
         "Environment :: Web Environment",
         "Framework :: Django",

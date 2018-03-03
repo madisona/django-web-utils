@@ -1,6 +1,7 @@
 import mock
 from django import template
 from django import test
+from django.core.exceptions import ImproperlyConfigured
 from django.core.paginator import Paginator, Page
 
 try:
@@ -98,6 +99,46 @@ class UniversalTrackEventTemplateTagTests(test.TestCase):
         output = analytics_tags.universal_track_event("Category", "action", "company's bad;-stuff.")
         expected = "onClick=\"ga('send', 'event', 'Category', 'action', 'company\\u0027s bad\\u003B-stuff.');\""
         self.assertEqual(expected, output)
+
+
+class AnalyticsSnippetTemplateTagTests(test.TestCase):
+
+    def _render_template(self):
+        t = template.Template("""
+            {% load analytics_tags %}
+            {% analytics_snippet %}
+        """)
+        request = test.RequestFactory().get('/my/path/')
+        context = template.RequestContext(request)
+        return t.render(context)
+
+    @test.override_settings(GOOGLE_ANALYTICS_ID="UA-1234567", GOOGLE_ANALYTICS_DOMAIN="www.example.com")
+    def test_renders_analytics_snippet(self):
+        response = self._render_template()
+        self.assertIn("ga('create', 'UA-1234567', 'www.example.com');", response)
+
+    def test_raises_improperly_configured_when_neither_settings_not_defined(self):
+        with self.assertRaises(ImproperlyConfigured) as e:
+            self._render_template()
+        self.assertEqual(
+            "You must define GOOGLE_ANALYTICS_ID and GOOGLE_ANALYTICS_DOMAIN in settings.", str(e.exception)
+        )
+
+    @test.override_settings(GOOGLE_ANALYTICS_ID="UA-1234567")
+    def test_raises_improperly_configured_when_only_analytics_id_defined(self):
+        with self.assertRaises(ImproperlyConfigured) as e:
+            self._render_template()
+        self.assertEqual(
+            "You must define GOOGLE_ANALYTICS_ID and GOOGLE_ANALYTICS_DOMAIN in settings.", str(e.exception)
+        )
+
+    @test.override_settings(GOOGLE_ANALYTICS_DOMAIN="www.example.com")
+    def test_raises_improperly_configured_when_only_analytics_domain_defined(self):
+        with self.assertRaises(ImproperlyConfigured) as e:
+            self._render_template()
+        self.assertEqual(
+            "You must define GOOGLE_ANALYTICS_ID and GOOGLE_ANALYTICS_DOMAIN in settings.", str(e.exception)
+        )
 
 
 class ActivateTemplateTagTests(test.TestCase):
