@@ -7,7 +7,6 @@ from django.conf.urls import include, url
 from django.views.generic import View
 
 urlpatterns = [
-
     url(r'^$', View.as_view(), name='sitemap'),
     # url(r'^example/', include('example.foo.urls')),
 
