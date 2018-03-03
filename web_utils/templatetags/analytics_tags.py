@@ -56,7 +56,7 @@ def gtag_track_event(category, action, label):
     """
     This is the most recent style. the gtag snippet replaced the universal track event
     """
-    return "onClick=\"gtag('event', '{action}', {{'event_category': '{category}', 'event_label': '{label}'}});\"".format(
+    return "onClick=\"gtag('event', '{action}', {{'event_category': '{category}', 'event_label': '{label}'}});\"".format(  # noqa: E501
         category=escapejs(category),
         action=escapejs(action),
         label=escapejs(label).replace("\\u002D", "-"),

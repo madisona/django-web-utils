@@ -110,7 +110,7 @@ class GTagTrackEventTemplateTagTests(test.TestCase):
 
     def test_escapes_js_for_label(self):
         output = analytics_tags.gtag_track_event("Category", "action", "company's bad;-stuff.")
-        expected = "onClick=\"gtag('event', 'action', {'event_category': 'Category', 'event_label': 'company\\u0027s bad\\u003B-stuff.'});\""
+        expected = "onClick=\"gtag('event', 'action', {'event_category': 'Category', 'event_label': 'company\\u0027s bad\\u003B-stuff.'});\""  # noqa: E501
         self.assertEqual(expected, output)
 
 
@@ -157,10 +157,12 @@ class AnalyticsSnippetTemplateTagTests(test.TestCase):
 class AnalyticsGtagSnippetTemplateTagTests(test.TestCase):
 
     def _render_template(self):
-        t = template.Template("""
+        t = template.Template(
+            """
             {% load analytics_tags %}
             {% analytics_gtag_snippet %}
-        """)
+        """
+        )
         request = test.RequestFactory().get('/my/path/')
         context = template.RequestContext(request)
         return t.render(context)
@@ -173,9 +175,7 @@ class AnalyticsGtagSnippetTemplateTagTests(test.TestCase):
     def test_raises_improperly_configured_when_neither_settings_not_defined(self):
         with self.assertRaises(ImproperlyConfigured) as e:
             self._render_template()
-        self.assertEqual(
-            "You must define GOOGLE_ANALYTICS_ID in settings.", str(e.exception)
-        )
+        self.assertEqual("You must define GOOGLE_ANALYTICS_ID in settings.", str(e.exception))
 
 
 class ActivateTemplateTagTests(test.TestCase):
