@@ -2,14 +2,14 @@ from setuptools import setup, find_packages
 
 setup(
     name="django-web-utils",
-    version='0.3.1',
+    version='0.3.2',
     author="Aaron Madison",
     description="Django helpers for working with the web.",
     long_description=open('README', 'r').read(),
     url="https://github.com/madisona/django-web-utils",
     packages=find_packages(exclude=["example"]),
     include_package_data=True,
-    install_requires=open('requirements/requirements.txt').read().split('\n'),
+    install_requires=open('requirements/requirements.txt').read().splitlines(),
     tests_require=open('requirements/test.txt').read().split('\n'),
     zip_safe=False,
     classifiers=[
