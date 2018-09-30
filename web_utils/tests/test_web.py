@@ -7,7 +7,7 @@ except ImportError:
 
 from django import test
 from django.conf import settings
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 from web_utils.web import ping_google_sitemap
 

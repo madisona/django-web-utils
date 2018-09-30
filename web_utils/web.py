@@ -6,7 +6,7 @@ except ImportError:
     from urllib.parse import urlencode
 
 from django.conf import settings
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 GOOGLE_SITEMAP_URL = 'http://www.google.com/webmasters/tools/ping'
 
