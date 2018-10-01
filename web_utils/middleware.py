@@ -1,8 +1,9 @@
 from django.conf import settings
 from django.http import HttpResponsePermanentRedirect
+from django.utils.deprecation import MiddlewareMixin
 
 
-class SSLMiddleware(object):
+class SSLMiddleware(MiddlewareMixin):
     """
     Lets you specify which urls use SSL and which do not. The middleware
     forces every request to use the protocol specified.
