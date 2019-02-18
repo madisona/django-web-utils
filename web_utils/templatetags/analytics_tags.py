@@ -1,7 +1,7 @@
 from django import template
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
-from django.utils.html import escapejs
+from django.utils.html import escapejs, mark_safe
 
 register = template.Library()
 
@@ -34,21 +34,21 @@ def analytics_gtag_snippet():
 # deprecated
 @register.simple_tag
 def track_event(category, action, label):
-    return "onClick=\"_gaq.push(['_trackEvent', '{category}', '{action}', '{label}']);\"".format(
+    return mark_safe("onClick=\"_gaq.push(['_trackEvent', '{category}', '{action}', '{label}']);\"".format(
         category=escapejs(category),
         action=escapejs(action),
         label=escapejs(label).replace("\\u002D", "-"),
-    )
+    ))
 
 
 # deprecated
 @register.simple_tag
 def universal_track_event(category, action, label):
-    return "onClick=\"ga('send', 'event', '{category}', '{action}', '{label}');\"".format(
+    return mark_safe("onClick=\"ga('send', 'event', '{category}', '{action}', '{label}');\"".format(
         category=escapejs(category),
         action=escapejs(action),
         label=escapejs(label).replace("\\u002D", "-"),
-    )
+    ))
 
 
 @register.simple_tag
@@ -56,8 +56,8 @@ def gtag_track_event(category, action, label):
     """
     This is the most recent style. the gtag snippet replaced the universal track event
     """
-    return "onClick=\"gtag('event', '{action}', {{'event_category': '{category}', 'event_label': '{label}'}});\"".format(  # noqa: E501
+    return mark_safe("onClick=\"gtag('event', '{action}', {{'event_category': '{category}', 'event_label': '{label}'}});\"".format(  # noqa: E501
         category=escapejs(category),
         action=escapejs(action),
         label=escapejs(label).replace("\\u002D", "-"),
-    )
+    ))
