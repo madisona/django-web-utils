@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="django-web-utils",
-    version='0.4.3',
+    version='0.4.4',
     author="Aaron Madison",
     description="Django helpers for working with the web.",
     long_description=open('README', 'r').read(),
@@ -24,6 +24,8 @@ setup(
         "Programming Language :: Python :: 3.5",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
         "Topic :: Software Development",
         "Topic :: Software Development :: Libraries :: Application Frameworks",
     ],
