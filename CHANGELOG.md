@@ -1,3 +1,9 @@
+## 0.4.5
+
+* Added ga4 analytics tag and event tracking
+* added Django 4.0 and 4.1 to CI checks
+* added Python 3.10 to CI checks
+
 ## 0.4.4
 
 * Removed upper bound on django support
