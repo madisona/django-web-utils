@@ -122,13 +122,15 @@ class GA4TrackEventTemplateTagTests(test.TestCase):
         self.assertEqual(expected, output)
 
     def test_can_use_many_parameters(self):
-        output = analytics_tags.ga4_track_event("action_name", "companyid", "9999", "username", "tester", "region", "midwest")
+        output = analytics_tags.ga4_track_event(
+            "action_name", "companyid", "9999", "username", "tester", "region", "midwest"
+        )
         expected = "onClick=\"gtag('event', 'action_name', {'companyid': '9999', 'username': 'tester', 'region': 'midwest'});\""
         self.assertEqual(expected, output)
 
     def test_raises_error_when_parameters_arent_divisible_by_2(self):
         # parameters must match,
-        with self.assertRaises(ValueError, msg="Parameters Must be in groups of 2:  key, value") as e:
+        with self.assertRaises(ValueError, msg="Parameters Must be in groups of 2:  key, value"):
             analytics_tags.ga4_track_event("action_name", "company-id", "9999", "other_thing")
 
     def test_escapes_js_for_label(self):

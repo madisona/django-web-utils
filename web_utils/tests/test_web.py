@@ -41,9 +41,8 @@ class GoogleSitemapPingTests(test.TestCase):
     def test_pings_google_sitemap_with_sitemap_location(self, urlopen):
         ping_google_sitemap(mock.Mock())
 
-        expected_call = self.settings_dict['GOOGLE_SITEMAP_URL'] + '?sitemap=' + quote_plus(
-            self.settings_dict['SITE_DOMAIN'] + reverse("sitemap")
-        )
+        expected_call = self.settings_dict[
+            'GOOGLE_SITEMAP_URL'] + '?sitemap=' + quote_plus(self.settings_dict['SITE_DOMAIN'] + reverse("sitemap"))
         urlopen.assert_called_once_with(expected_call)
 
     @mock.patch('web_utils.web.urlopen')
