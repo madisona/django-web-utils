@@ -1,3 +1,7 @@
+## 0.4.6
+
+* Added decorated patterns url helper
+
 ## 0.4.5
 
 * Added ga4 analytics tag and event tracking

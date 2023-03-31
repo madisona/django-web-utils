@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="django-web-utils",
-    version='0.4.5',
+    version='0.4.6',
     author="Aaron Madison",
     description="Django helpers for working with the web.",
     long_description=open('README', 'r').read(),
